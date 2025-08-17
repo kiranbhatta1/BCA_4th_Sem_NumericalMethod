@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <conio.h>
 #include <math.h>
-
-// Define the function
 double f(double x) {
     return (x * sin(x) + cos(x));  
-    // your function was written with *x sin(x) -> syntax error
 }
 
 void main() {
