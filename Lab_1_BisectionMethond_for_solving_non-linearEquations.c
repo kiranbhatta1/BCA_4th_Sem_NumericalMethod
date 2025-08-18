@@ -1,38 +1,41 @@
 #include <stdio.h>
 #include <math.h>
-double f(double x) {
-    return (x * sin(x) + cos(x));
-}
+
+#define f(x) ((x)*(x)*(x) - 4*(x) - 9)
 
 int main() {
-    double a, b, E, c;
-    int maxIter = 1000, iter = 0;
+    float a, b, c, Te;
+    int i = 1;
 
-    printf("Enter initial interval (a, b): ");
-    scanf("%lf %lf", &a, &b);
+  
+    printf("Enter the initial guesses (a and b): ");
+    scanf("%f %f", &a, &b);
 
-    printf("Enter error tolerance (E): ");
-    scanf("%lf", &E);
-    if (f(a) * f(b) > 0) {
-        printf("Invalid interval. Root may not exist between (a, b).\n");
-        return 0;
-    }
+    printf("Enter the allowed error (tolerance): ");
+    scanf("%f", &Te);
+
+    printf("...................................................................................\n");
+    printf("i\t     a\t\t     b\t\t     c\t\t   f(a)\t\t   f(b)\t\t   f(c)\n");
+    printf("...................................................................................\n");
+
+
     do {
-        c = (a + b) / 2.0;
+        c = (a + b) / 2.0;  
+        printf("%d\t%f\t%f\t%f\t%f\t%f\t%f\n", i, a, b, c, f(a), f(b), f(c));
 
-        if (f(c) * f(a) < 0)
+
+        if (f(a) * f(c) < 0)
             b = c;
         else
             a = c;
 
-        iter++;
-        if (iter > maxIter) {
-            printf("Method did not converge.\n");
-            return 0;
-        }
+        i++;
+    } while (fabs(f(c)) > Te); 
 
-    } while (fabs(f(c)) > E);
 
-    printf("Root = %.6f (after %d iterations)\n", c, iter);
+    printf("...................................................................................\n");
+    printf("Approximate root = %f\n", c);
+    printf("f(c) = %f (should be close to 0)\n", f(c));
+
     return 0;
 }
